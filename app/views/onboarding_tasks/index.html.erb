@@ -1,0 +1,68 @@
+<h1>Onboarding Tasks</h1>
+
+<div class="mb-4">
+  <%= form_with url: onboarding_tasks_path, method: :get, local: true do %>
+    <div class="flex gap-4">
+      <div>
+        <label>Status</label>
+        <%= select_tag :status, options_for_select(@statuses, params[:status]), include_blank: true, class: "form-select" %>
+      </div>
+      <div>
+        <label>Department</label>
+        <%= select_tag :department, options_for_select(@departments, params[:department]), include_blank: true, class: "form-select" %>
+      </div>
+      <div class="pt-4">
+        <%= submit_tag "Filter", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Status</th>
+      <th>Employee</th>
+      <th>Department</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @onboarding_tasks.each do |task| %>
+      <tr>
+        <td><%= task.task_name %></td>
+        <td><%= task.status %></td>
+        <td><%= task.employee.name %></td>
+        <td><%= task.employee.department %></td>
+        <td>
+          <% if task.status != "completed" %>
+            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#completeModal<%= task.id %>">Mark Complete</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="completeModal<%= task.id %>" tabindex="-1" aria-labelledby="modalLabel<%= task.id %>" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel<%= task.id %>">Complete Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to mark "<%= task.task_name %>" as completed?
+                  </div>
+                  <div class="modal-footer">
+                    <%= button_to "Yes, Complete", onboarding_task_path(task, onboarding_task: { status: "completed" }), method: :patch, class: "btn btn-success", form: { data: { turbo: false } } %>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <span class="text-success">Done</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
