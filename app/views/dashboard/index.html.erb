@@ -1,11 +1,12 @@
 <div>
+<div>
   <div class="flex flex-wrap gap-4 mb-6">
     <%= form_with url: root_path, method: :get, local: true do |form| %>
       <div class="flex gap-2">
         <%= form.label :status %>
-        <%= form.select :status, ['pending', 'completed'], include_blank: true, class: "form-select" %>
+        <%= form.select :status, [ 'pending', 'completed'], { prompt: 'All' }, class: "form-select capitalize" %>
         <%= form.label :department %>
-        <%= form.select :department, Employee.distinct.pluck(:department), include_blank: true, class: "form-select" %>
+        <%= form.select :department, Employee.distinct.pluck(:department), { prompt: 'All' }, class: "form-select capitalize" %>
         <%= form.submit "Filter", class: "btn btn-primary" %>
       </div>
     <% end %>
@@ -27,29 +28,6 @@
       </div>
     <% end %>
   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="completeModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirm Completion</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Are you sure you want to mark this task as completed?
-        </div>
-        <div class="modal-footer">
-          <form id="completeTaskForm" action="" method="post" data-turbo="false">
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-            <%= hidden_field_tag "_method", "patch" %>
-            <input type="hidden" id="taskId" name="id">
-            <button type="submit" class="btn btn-primary">Yes</button>
-          </form>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -62,4 +40,3 @@
     document.getElementById('taskId').value = taskId
   })
 </script>
-
