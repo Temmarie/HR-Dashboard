@@ -1,30 +1,37 @@
-# employees = [
-#   { name: "John Doe", department: "Sales" },
-#   { name: "Jane Doe", department: "Marketing" },
-#   { name: "Bob Smith", department: "IT" },
-#   { name: "Alice Johnson", department: "HR" },
-#   { name: "Mike Brown", department: "Finance" },
-# ]
 
-# task_names = ["Setup email", "Create Slack account", "Sign NDA", "Meet team", "Review company policies"]
+departments = [
+  "Engineering",
+  "Human Resources",
+  "Marketing",
+  "Sales",
+  "Product",
+  "Customer Success"
+]
 
-# employees.each do |employee|
-#   Employee.create!(employee)
-# end
+departments.each do |dept|
+  Department.find_or_create_by!(name: dept)
+end
 
-# Employee.all.each do |employee|
-#   task_names.sample(rand(3..5)).each do |task|
-#     employee.onboarding_tasks.create!(task_name: task, status: ["pending", "completed"].sample)
-#   end
-# end
-
-
-
-
-User.create!(
-    name: "Paul"
-  email_address: "admin@hr.com",
-  password: "securepass",
-  password_confirmation: "securepass",
+# Create Admin
+admin = User.create!(
+  email_address: "admin@example.com",
+  password: "password123",
+  password_confirmation: "password123",
   role: "admin"
 )
+
+# Create Employees
+5.times do |i|
+  user = User.create!(
+    email_address: "employee#{i + 1}@example.com",
+    password: "password123",
+    password_confirmation: "password123",
+    role: "employee"
+  )
+
+  Employee.create!(
+    name: "Employee #{i + 1}",
+    department: Department.all.sample.name,
+    user: user
+  )
+end
