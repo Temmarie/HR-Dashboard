@@ -1,42 +1,54 @@
-<div class="px-6 py-4 text-white">
-  <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
-  <div class="mb-4">
-    <p class="text-lg">Total Employees: <strong><%= @employees.count %></strong></p>
-    <p class="text-lg">Total Tasks: <strong><%= @tasks.count %></strong></p>
-  </div>
-
-  <h2 class="text-xl font-semibold mt-8 mb-2">Departments</h2>
-  <ul class="list-disc list-inside text-gray-300">
-    <% @departments.each do |dept| %>
-      <li><%= dept.name %></li>
-    <% end %>
-  </ul>
-</div>
 
 <div class="container mx-auto my-10 text-white">
   <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
-
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Overview -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-4">Overview</h2>
+      <div class="flex justify-between mb-4">
+        <div>
+          <p class="text-lg">Total Employees:</p>
+          <p class="text-2xl font-bold"><%= @employees.count %></p>
+        </div>
+        <div>
+          <p class="text-lg">Total Tasks:</p>
+          <p class="text-2xl font-bold"><%= @tasks.count %></p>
+        </div>
+      </div>
+      <h2 class="text-xl font-semibold mt-8 mb-2">Departments</h2>
+      <ul class="list-disc list-inside text-gray-300">
+        <% @departments.each do |dept| %>
+          <li><%= dept.name %></li>
+        <% end %>
+      </ul>
+    </div>
     <!-- Employees -->
     <div class="bg-gray-800 p-6 rounded-xl shadow">
       <h2 class="text-xl font-semibold mb-4">Employees</h2>
-      <% @employees.each do |emp| %>
-        <p class="mb-2">
-          <strong><%= emp.name %></strong> - <%= emp.department %> | 
-          <%= emp.user.email_address %>
-        </p>
-      <% end %>
+      <div class="overflow-y-auto max-h-96">
+        <% @employees.each do |emp| %>
+          <div class="mb-4 p-4 border rounded">
+            <p class="font-bold"><%= emp.name %></p>
+            <p>Department: <%= emp.department %></p>
+            <p>Email: <%= emp.user.email_address %></p>
+          </div>
+        <% end %>
+      </div>
     </div>
-
     <!-- Onboarding Tasks -->
     <div class="bg-gray-800 p-6 rounded-xl shadow">
-      <h2 class="text-xl font-semibold mb-4">Tasks</h2>
-      <% @tasks.each do |task| %>
-        <p class="mb-2">
-          <%= task.task_name %> → <%= task.status %> (for <%= task.employee.name %>)
-        </p>
-      <% end %>
+      <h2 class="text-xl font-semibold mb-4">Onboarding Tasks</h2>
+      <div class="overflow-y-auto max-h-96">
+        <% @tasks.each do |task| %>
+          <div class="mb-4 p-4 border rounded">
+            <p class="font-bold"><%= task.task_name %></p>
+            <p>Status: <%= task.status %></p>
+            <p>Assigned to: <%= task.employee.name %></p>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
+

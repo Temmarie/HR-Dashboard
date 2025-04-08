@@ -1,7 +1,7 @@
-<div class="text-white p-6 max-w-3xl mx-auto">
+<div class="text-black p-6 ">
   <h1 class="text-2xl font-bold mb-6">Assign Task to Employee</h1>
 
-  <%= form_with url: assign_task_path, method: :post, local: true do |f| %>
+  <%= form_with url: admin_assign_task_path, method: :post, local: true, scope: :onboarding_task do  |f| %>
     <div class="mb-4">
       <%= f.label :employee_id, "Select Employee" %>
       <%= f.collection_select :employee_id, Employee.all, :id, :name, { prompt: "Choose one" }, class: "form-select" %>

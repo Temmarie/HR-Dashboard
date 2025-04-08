@@ -12,12 +12,12 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin!
-    unless current_user&.role == "admin"
+    unless Current.user&.role == "admin"
       redirect_to root_path, alert: "You are not authorized to access this page."
     end
   end
 
   def admin?
-    current_user&.role == "admin"
+    Current.user&.role == "admin"
   end
 end

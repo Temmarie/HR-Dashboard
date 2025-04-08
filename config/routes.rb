@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 namespace :admin do
   get "dashboard", to: "dashboard#index"
-  get "assign_task", to: "dashboard#assign_task"
-  post "assign_task", to: "dashboard#create_task"
+  get "assign_task", to: "dashboard#assign_task", as: :assign_task
+  post "assign_task", to: "dashboard#create_task", as: :create_task
 end
 
 

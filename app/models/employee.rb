@@ -3,4 +3,10 @@ class Employee < ApplicationRecord
      belongs_to :user
 
      validates :name, presence: true 
+
+
+def admin?
+    role == 'admin'
+  end
+  
 end
