@@ -1,42 +1,35 @@
 <div>
-<div>
-  <div class="flex flex-wrap gap-4 mb-6">
-    <%= form_with url: root_path, method: :get, local: true do |form| %>
-      <div class="flex gap-2">
-        <%= form.label :status %>
-        <%= form.select :status, [ 'pending', 'completed'], { prompt: 'All' }, class: "form-select capitalize" %>
-        <%= form.label :department %>
-        <%= form.select :department, Employee.distinct.pluck(:department), { prompt: 'All' }, class: "form-select capitalize" %>
-        <%= form.submit "Filter", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-  </div>
-  <div class="mt-4">
-    <% @employees.each do |emp| %>
-      <div class="mb-6 p-4 border rounded-lg shadow-sm">
-        <h3 class="text-xl font-semibold mb-2"><%= emp.name %> - <%= emp.department %></h3>
-        <ul>
-          <% emp.onboarding_tasks.each do |task| %>
-            <li class="flex items-center justify-between py-2 border-b">
-              <span><%= task.task_name %> - <span class="<%= task.status == 'completed' ? 'text-green-500' : 'text-yellow-500' %>"><%= task.status.capitalize %></span></span>
-              <% if task.status == 'pending' %>
-                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#completeModal" data-task-id="<%= task.id %>"> Mark as Completed </button>
+  <div>
+    <div class="flex flex-wrap gap-4 mb-6">
+      <%= form_with url: root_path, method: :get, local: true do |form| %>
+        <div class="flex gap-2">
+          <%= form.label :status %>
+          <%= form.select :status, [ 'pending', 'completed'], { prompt: 'All' }, class: "form-select capitalize" %>
+          <%= form.label :department %>
+          <%= form.select :department, Employee.distinct.pluck(:department), { prompt: 'All' }, class: "form-select capitalize" %>
+          <%= form.submit "Filter", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-4">
+      <% @employees.each do |emp| %>
+        <div class="mb-6 p-4 border rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold mb-2"><%= emp.name %> - <%= emp.department %></h3>
+          <ul>
+            <% if emp.onboarding_tasks.any? %>
+              <% emp.onboarding_tasks.each do |task| %>
+                <li class="flex items-center justify-between py-2 border-b">
+                  <span><%= task.task_name %> - <span class="<%= task.status == 'completed' ? 'text-green-500' : 'text-yellow-500' %>"><%= task.status.capitalize %></span></span>
+                  <% if task.status == 'pending' %>
+                    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#completeModal" data-task-id="<%= task.id %>"> Mark as Completed </button>
+                  <% end %>
+                </li>
               <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+            <% else %>
+              <p>No tasks assigned.</p>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>
-
-<script>
-  var completeModal = document.getElementById('completeModal')
-  completeModal.addEventListener('show.bs.modal', function (event) {
-    var button = event.relatedTarget
-    var taskId = button.getAttribute('data-task-id')
-    var form = completeModal.querySelector('form')
-    form.action = '/onboarding_tasks/' + taskId
-    document.getElementById('taskId').value = taskId
-  })
-</script>
