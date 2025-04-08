@@ -18,3 +18,13 @@
 #   end
 # end
 
+
+
+
+User.create!(
+    name: "Paul"
+  email_address: "admin@hr.com",
+  password: "securepass",
+  password_confirmation: "securepass",
+  role: "admin"
+)
