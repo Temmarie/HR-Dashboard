@@ -1,0 +1,15 @@
+<div class="px-6 py-4 text-white">
+  <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+
+  <div class="mb-4">
+    <p class="text-lg">Total Employees: <strong><%= @employees.count %></strong></p>
+    <p class="text-lg">Total Tasks: <strong><%= @tasks.count %></strong></p>
+  </div>
+
+  <h2 class="text-xl font-semibold mt-8 mb-2">Departments</h2>
+  <ul class="list-disc list-inside text-gray-300">
+    <% @departments.each do |dept| %>
+      <li><%= dept.name %></li>
+    <% end %>
+  </ul>
+</div>

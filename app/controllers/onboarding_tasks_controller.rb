@@ -1,4 +1,6 @@
 class OnboardingTasksController < ApplicationController
+  before_action :authenticate_admin!, only: [:create, :update]
+
     def index
         @employees = Employee.all
         if params[:department].present?
