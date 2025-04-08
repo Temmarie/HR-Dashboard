@@ -1,0 +1,10 @@
+<% if model.errors.any? %>
+  <div class="bg-red-900 text-red-300 font-medium rounded-lg px-3 py-2 mb-5">
+    <h2 class="text-lg font-bold">Please fix the following errors:</h2>
+    <ul class="list-disc list-inside">
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
