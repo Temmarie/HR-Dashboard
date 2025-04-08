@@ -13,3 +13,30 @@
     <% end %>
   </ul>
 </div>
+
+<div class="container mx-auto my-10 text-white">
+  <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Employees -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-4">Employees</h2>
+      <% @employees.each do |emp| %>
+        <p class="mb-2">
+          <strong><%= emp.name %></strong> - <%= emp.department %> | 
+          <%= emp.user.email_address %>
+        </p>
+      <% end %>
+    </div>
+
+    <!-- Onboarding Tasks -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-4">Tasks</h2>
+      <% @tasks.each do |task| %>
+        <p class="mb-2">
+          <%= task.task_name %> → <%= task.status %> (for <%= task.employee.name %>)
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

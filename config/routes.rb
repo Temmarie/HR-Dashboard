@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get "dashboard", to: "dashboard#index"
-  end
-  
+namespace :admin do
+  get "dashboard", to: "dashboard#index"
+  get "assign_task", to: "dashboard#assign_task"
+  post "assign_task", to: "dashboard#create_task"
+end
+
 
   resource :session
   resources :passwords, param: :token

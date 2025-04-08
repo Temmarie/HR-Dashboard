@@ -1,0 +1,4 @@
+<% if current_user&.admin? %>
+  <%= link_to "Admin Dashboard", admin_dashboard_path, class: "text-white" %>
+  <%= link_to "Assign Task", admin_assign_task_path, class: "text-white ml-4" %>
+<% end %>
