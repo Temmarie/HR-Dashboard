@@ -15,9 +15,10 @@
 @import "bootstrap";
 @import "kaminari/bootstrap";
 
-.pagination {
+.plaque {
   justify-content: center;
   margin-top: 20px;
+  color: aquamarine;
 }
 
 .page-item .page-link {

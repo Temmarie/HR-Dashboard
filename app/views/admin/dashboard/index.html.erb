@@ -69,21 +69,20 @@
             </div>
           </div>
         <% end %>
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center mt-4">
-          <%= paginate @employees %>
-        </div>
       <% else %>
         <p class="text-muted">No employees found for the selected filters.</p>
       <% end %>
     </div>
 
     <!-- Tasks -->
-    <div class="col-md-6">
-      <h4 class="text-info mb-3">Onboarding Tasks</h4>
-      <% if @tasks.any? %>
-        <% @tasks.each do |task| %>
-          <div class="card mb-3 shadow-sm border border-secondary bg-dark text-light">
+    <!-- Tasks -->
+<div class="col-md-6">
+  <h4 class="text-info mb-3">Onboarding Tasks</h4>
+  <% if @tasks.any? %>
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+      <% @tasks.each do |task| %>
+        <div class="col">
+          <div class="card shadow-sm border border-secondary bg-dark text-light h-100">
             <div class="card-body">
               <h5 class="card-title mb-2 text-warning"><%= task.task_name %></h5>
               <p class="mb-1">🧑 Assigned to: <span class="text-info"><%= task.employee.name %></span></p>
@@ -94,14 +93,12 @@
               </p>
             </div>
           </div>
-        <% end %>
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center mt-4">
-          <%= paginate @tasks %>
         </div>
-      <% else %>
-        <p class="text-muted">No tasks found for the selected filters.</p>
       <% end %>
     </div>
+  <% else %>
+    <p class="text-muted">No tasks found for the selected filters.</p>
+  <% end %>
+</div>
   </div>
 </div>

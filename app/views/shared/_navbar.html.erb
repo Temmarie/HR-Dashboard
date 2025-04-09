@@ -1,25 +1,38 @@
-<nav class="bg-indigo-600 text-white shadow-md">
-  <div class="container mx-auto flex justify-between items-center p-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+  <div class="container-fluid">
     <!-- Logo or Home Link -->
-    <div class="text-2xl font-bold">
-      <%= link_to "HR Dashboard", root_path, class: "hover:text-indigo-300" %>
-    </div>
+    <a class="navbar-brand fw-bold" href="<%= root_path %>">HR Dashboard</a>
 
-    <!-- Admin Links -->
-    <% if Current.user&.admin? %>
-      <div class="md:flex space-x-6">
-        <%= link_to "Admin Dashboard", admin_dashboard_path, class: "nav-text" %>
-        <%= link_to "Assign Task", admin_assign_task_path, class: "text-white" %>
-      </div>
-    <% end %>
+    <!-- Toggle Button for Mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <!-- Authentication Links -->
-    <div class="flex items-center space-x-4">
-      <% if Current.user %>
-        <%= button_to "Log out", session_path, method: :delete, class: "bg-red-500 hover:bg-red-400 text-white font-medium py-2 px-4 rounded" %>
-      <% else %>
-        <%= link_to "Log in", new_session_path, class: "bg-green-500 hover:bg-green-400 text-white font-medium py-2 px-4 rounded" %>
-      <% end %>
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <% if Current.user&.admin? %>
+          <!-- Admin Links -->
+          <li class="nav-item">
+            <%= link_to "Admin Dashboard", admin_dashboard_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Assign Task", admin_assign_task_path, class: "nav-link" %>
+          </li>
+        <% end %>
+
+        <% if Current.user %>
+          <!-- Log Out Button -->
+          <li class="nav-item">
+            <%= button_to "Log out", session_path, method: :delete, class: "btn btn-danger btn-sm ms-3" %>
+          </li>
+        <% else %>
+          <!-- Log In Link -->
+          <li class="nav-item">
+            <%= link_to "Log in", new_session_path, class: "btn btn-success btn-sm ms-3" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>
