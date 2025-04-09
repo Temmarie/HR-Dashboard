@@ -14,22 +14,22 @@
         <% if Current.user&.admin? %>
           <!-- Admin Links -->
           <li class="nav-item">
-            <%= link_to "Admin Dashboard", admin_dashboard_path, class: "nav-link" %>
+            <%= link_to "Admin Dashboard", admin_dashboard_path, class: "nav-link fw-bold" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Assign Task", admin_assign_task_path, class: "nav-link" %>
+            <%= link_to "Assign Task", admin_assign_task_path, class: "nav-link fw-bold" %>
           </li>
         <% end %>
 
         <% if Current.user %>
           <!-- Log Out Button -->
           <li class="nav-item">
-            <%= button_to "Log out", session_path, method: :delete, class: "btn btn-danger btn-sm ms-3" %>
+            <%= button_to "Log out", session_path, method: :delete, class: "btn btn-danger btn-sm ms-3 fw-bold" %>
           </li>
         <% else %>
           <!-- Log In Link -->
           <li class="nav-item">
-            <%= link_to "Log in", new_session_path, class: "btn btn-success btn-sm ms-3" %>
+            <%= link_to "Log in", new_session_path, class: "btn btn-success btn-sm ms-3 fw-bold" %>
           </li>
         <% end %>
       </ul>
