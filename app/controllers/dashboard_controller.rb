@@ -17,6 +17,8 @@ class DashboardController < ApplicationController
     else
       @employees = [Current.user] # Only show the logged-in employee and their tasks
     end
+
+  @onboarding_task = OnboardingTask.new
   end
   
   def home
