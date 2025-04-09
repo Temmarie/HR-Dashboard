@@ -11,3 +11,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "bootstrap";
+@import "kaminari/bootstrap";
+
+.pagination {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-item .page-link {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: #fff;
+}
+
+.page-item.active .page-link {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: #fff;
+}
+
+.page-item .page-link:hover {
+  background-color: #495057;
+  border-color: #495057;
+}

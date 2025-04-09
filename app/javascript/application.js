@@ -1,7 +1,8 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails";
 import "controllers";
-import "bootstrap";
+
+import "bootstrap/js/dist/modal";
 
 // document.addEventListener("DOMContentLoaded", function () {
 //   var completeModal = document.getElementById("completeModal");

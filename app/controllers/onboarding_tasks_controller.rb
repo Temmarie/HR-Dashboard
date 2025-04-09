@@ -11,25 +11,25 @@ class OnboardingTasksController < ApplicationController
     end
   end
 
-  # def update
-  #   task = OnboardingTask.find(params[:id])
-  #   puts params.inspect
-  #   if current_user.admin? || task.employee.user == current_user
-  #     task.update(status: 'completed')
-  #     redirect_to root_path, notice: 'Task marked as completed.'
-  #   else
-  #     redirect_to root_path, alert: 'Access denied.'
-  #   end
-  # end
-
-def update
-  puts "Params: #{params.inspect}"
-  task = OnboardingTask.find(params[:id])
-  if task.update(status: 'completed')
-    redirect_to root_path, notice: 'Task marked as completed.'
-  else
-    redirect_to root_path, alert: 'Failed to mark task as completed.'
+  def update
+    task = OnboardingTask.find(params[:id])
+    puts params.inspect
+    if current_user.admin? || task.employee.user == current_user
+      task.update(status: 'completed')
+      redirect_to root_path, notice: 'Task marked as completed.'
+    else
+      redirect_to root_path, alert: 'Access denied.'
+    end
   end
-end
+
+# def update
+#   puts "Params: #{params.inspect}"
+#   task = OnboardingTask.find(params[:id])
+#   if task.update(status: 'completed')
+#     redirect_to root_path, notice: 'Task marked as completed.'
+#   else
+#     redirect_to root_path, alert: 'Failed to mark task as completed.'
+#   end
+# end
 
 end

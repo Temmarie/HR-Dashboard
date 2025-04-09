@@ -1,54 +1,107 @@
+<!-- Dashboard Content -->
+<div class="container py-5">
+  <h1 class="text-center text-primary mb-5">Admin Dashboard</h1>
 
-
-<div class="container mx-auto my-10 text-white">
-  <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <!-- Overview -->
-    <div class="bg-gray-800 p-6 rounded-xl shadow">
-      <h2 class="text-xl font-semibold mb-4">Overview</h2>
-      <div class="flex justify-between mb-4">
-        <div>
-          <p class="text-lg">Total Employees:</p>
-          <p class="text-2xl font-bold"><%= @employees.count %></p>
-        </div>
-        <div>
-          <p class="text-lg">Total Tasks:</p>
-          <p class="text-2xl font-bold"><%= @tasks.count %></p>
+  <!-- Overview + Filter Section -->
+  <div class="row g-4 mb-5">
+    <!-- Overview Card -->
+    <div class="col-lg-6">
+      <div class="card bg-dark text-white h-100 shadow-lg border border-secondary">
+        <div class="card-body">
+          <h5 class="card-title border-bottom pb-2 mb-4 text-info">Overview</h5>
+          <div class="row text-center mb-4">
+            <div class="col">
+              <p class="mb-1 text-light">Total Employees</p>
+              <h3 class="text-warning"><%= @employees.count %></h3>
+            </div>
+            <div class="col">
+              <p class="mb-1 text-light">Total Tasks</p>
+              <h3 class="text-warning"><%= @tasks.count %></h3>
+            </div>
+          </div>
+          <h6 class="text-info mb-2">Departments</h6>
+          <ul class="list-group list-group-flush">
+            <% @departments.each do |dept| %>
+              <li class="list-group-item bg-dark text-light border-0 ps-0"><i class="bi bi-building me-2"></i><%= dept.name %></li>
+            <% end %>
+          </ul>
         </div>
       </div>
-      <h2 class="text-xl font-semibold mt-8 mb-2">Departments</h2>
-      <ul class="list-disc list-inside text-gray-300">
-        <% @departments.each do |dept| %>
-          <li><%= dept.name %></li>
-        <% end %>
-      </ul>
     </div>
-    <!-- Employees -->
-    <div class="bg-gray-800 p-6 rounded-xl shadow">
-      <h2 class="text-xl font-semibold mb-4">Employees</h2>
-      <div class="overflow-y-auto max-h-96">
-        <% @employees.each do |emp| %>
-          <div class="mb-4 p-4 border rounded">
-            <p class="font-bold"><%= emp.name %></p>
-            <p>Department: <%= emp.department %></p>
-            <p>Email: <%= emp.user.email_address %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <!-- Onboarding Tasks -->
-    <div class="bg-gray-800 p-6 rounded-xl shadow">
-      <h2 class="text-xl font-semibold mb-4">Onboarding Tasks</h2>
-      <div class="overflow-y-auto max-h-96">
-        <% @tasks.each do |task| %>
-          <div class="mb-4 p-4 border rounded">
-            <p class="font-bold"><%= task.task_name %></p>
-            <p>Status: <%= task.status %></p>
-            <p>Assigned to: <%= task.employee.name %></p>
-          </div>
-        <% end %>
+
+    <!-- Filter Form -->
+    <div class="col-lg-6">
+      <div class="card bg-dark text-white h-100 shadow-lg border border-secondary">
+        <div class="card-body">
+          <h5 class="card-title mb-4 text-info">Filter Records</h5>
+          <%= form_with url: admin_dashboard_path, method: :get, local: true do |form| %>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <%= form.label :status, "Task Status", class: "form-label text-light" %>
+                <%= form.select :status, ['pending', 'completed'], { prompt: 'All' }, class: "form-select bg-dark text-light border-secondary" %>
+              </div>
+              <div class="col-md-6">
+                <%= form.label :department, "Department", class: "form-label text-light" %>
+                <%= form.select :department, Employee.distinct.pluck(:department), { prompt: 'All' }, class: "form-select bg-dark text-light border-secondary" %>
+              </div>
+              <div class="col-12">
+                <%= form.submit "Filter", class: "btn btn-info w-100 text-white" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Employees + Tasks Section -->
+  <div class="row g-4">
+    <!-- Employees -->
+    <div class="col-md-6">
+      <h4 class="text-info mb-3">Employees</h4>
+      <% if @employees.any? %>
+        <% @employees.each do |emp| %>
+          <div class="card mb-3 shadow-sm border border-secondary bg-dark text-light">
+            <div class="card-body">
+              <h5 class="card-title mb-2 text-warning"><%= emp.name %></h5>
+              <p class="mb-1">📂 Department: <span class="text-info"><%= emp.department %></span></p>
+              <p>✉️ Email: <span class="text-light-emphasis"><%= emp.user.email_address %></span></p>
+            </div>
+          </div>
+        <% end %>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+          <%= paginate @employees %>
+        </div>
+      <% else %>
+        <p class="text-muted">No employees found for the selected filters.</p>
+      <% end %>
+    </div>
+
+    <!-- Tasks -->
+    <div class="col-md-6">
+      <h4 class="text-info mb-3">Onboarding Tasks</h4>
+      <% if @tasks.any? %>
+        <% @tasks.each do |task| %>
+          <div class="card mb-3 shadow-sm border border-secondary bg-dark text-light">
+            <div class="card-body">
+              <h5 class="card-title mb-2 text-warning"><%= task.task_name %></h5>
+              <p class="mb-1">🧑 Assigned to: <span class="text-info"><%= task.employee.name %></span></p>
+              <p>Status:
+                <span class="badge <%= task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %>">
+                  <%= task.status.capitalize %>
+                </span>
+              </p>
+            </div>
+          </div>
+        <% end %>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+          <%= paginate @tasks %>
+        </div>
+      <% else %>
+        <p class="text-muted">No tasks found for the selected filters.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

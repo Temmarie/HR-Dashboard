@@ -1,25 +1,24 @@
-<nav class="bg-lime-300">
+<nav class="bg-indigo-600 text-white shadow-md">
   <div class="container mx-auto flex justify-between items-center p-4">
-    <span class="text-xl font-bold text-blue-400">
-      <%= link_to "Home", root_path, class: "hover:text-blue-300" %>
-  
-    </span>
+    <!-- Logo or Home Link -->
+    <div class="text-2xl font-bold">
+      <%= link_to "HR Dashboard", root_path, class: "hover:text-indigo-300" %>
+    </div>
 
+    <!-- Admin Links -->
+    <% if Current.user&.admin? %>
+      <div class="md:flex space-x-6">
+        <%= link_to "Admin Dashboard", admin_dashboard_path, class: "nav-text" %>
+        <%= link_to "Assign Task", admin_assign_task_path, class: "text-white" %>
+      </div>
+    <% end %>
 
-<% if Current.user&.admin? %>
-  <%= link_to "Admin Dashboard", admin_dashboard_path, class: "text-blue-300" %>
-  <%= link_to "Assign Task", admin_assign_task_path, class: "text-blue-300 ml-4" %>
-<% end %>
-
-<p class="text-white">Current User: <%= Current.user&.email_address || "No user" %></p>
-<p class="text-white">Session ID: <%= cookies.signed[:session_id] %></p>
-
-
+    <!-- Authentication Links -->
     <div class="flex items-center space-x-4">
-      <% if authenticated? %>
-        <%= button_to "Log out", session_path, method: :delete, class: "bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded" %>
+      <% if Current.user %>
+        <%= button_to "Log out", session_path, method: :delete, class: "bg-red-500 hover:bg-red-400 text-white font-medium py-2 px-4 rounded" %>
       <% else %>
-        <%= link_to "Log in", new_session_path, class: "bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded" %>
+        <%= link_to "Log in", new_session_path, class: "bg-green-500 hover:bg-green-400 text-white font-medium py-2 px-4 rounded" %>
       <% end %>
     </div>
   </div>
