@@ -6,23 +6,23 @@
   <div class="row g-4 mb-5">
     <!-- Overview Card -->
     <div class="col-lg-6">
-      <div class="card bg-dark text-white h-100 shadow-lg border border-secondary">
+      <div class="card bg-white text-dark h-100 shadow-lg border border-primary">
         <div class="card-body">
-          <h5 class="card-title border-bottom pb-2 mb-4 text-info">Overview</h5>
+          <h5 class="card-title border-bottom pb-2 mb-4 text-primary">Overview</h5>
           <div class="row text-center mb-4">
             <div class="col">
-              <p class="mb-1 text-light">Total Employees</p>
-              <h3 class="text-warning"><%= @employees.count %></h3>
+              <p class="mb-1 text-secondary">Total Employees</p>
+              <h3 class="text-primary"><%= @employees.count %></h3>
             </div>
             <div class="col">
-              <p class="mb-1 text-light">Total Tasks</p>
-              <h3 class="text-warning"><%= @tasks.count %></h3>
+              <p class="mb-1 text-secondary">Total Tasks</p>
+              <h3 class="text-primary"><%= @tasks.count %></h3>
             </div>
           </div>
-          <h6 class="text-info mb-2">Departments</h6>
+          <h6 class="text-primary mb-2">Departments</h6>
           <ul class="list-group list-group-flush">
             <% @departments.each do |dept| %>
-              <li class="list-group-item bg-dark text-light border-0 ps-0"><i class="bi bi-building me-2"></i><%= dept.name %></li>
+              <li class="list-group-item bg-white text-dark border-0 ps-0"><i class="bi bi-building me-2"></i><%= dept.name %></li>
             <% end %>
           </ul>
         </div>
@@ -31,21 +31,21 @@
 
     <!-- Filter Form -->
     <div class="col-lg-6">
-      <div class="card bg-dark text-white h-100 shadow-lg border border-secondary">
+      <div class="card bg-white text-dark h-100 shadow-lg border border-primary">
         <div class="card-body">
-          <h5 class="card-title mb-4 text-info">Filter Records</h5>
+          <h5 class="card-title mb-4 text-primary">Filter Records</h5>
           <%= form_with url: admin_dashboard_path, method: :get, local: true do |form| %>
             <div class="row g-3">
               <div class="col-md-6">
-                <%= form.label :status, "Task Status", class: "form-label text-light" %>
-                <%= form.select :status, ['pending', 'completed'], { prompt: 'All' }, class: "form-select bg-dark text-light border-secondary" %>
+                <%= form.label :status, "Task Status", class: "form-label text-dark" %>
+                <%= form.select :status, ['pending', 'completed'], { prompt: 'All' }, class: "form-select bg-white text-dark border-primary" %>
               </div>
               <div class="col-md-6">
-                <%= form.label :department, "Department", class: "form-label text-light" %>
-                <%= form.select :department, Employee.distinct.pluck(:department), { prompt: 'All' }, class: "form-select bg-dark text-light border-secondary" %>
+                <%= form.label :department, "Department", class: "form-label text-dark" %>
+                <%= form.select :department, Employee.distinct.pluck(:department), { prompt: 'All' }, class: "form-select bg-white text-dark border-primary" %>
               </div>
               <div class="col-12">
-                <%= form.submit "Filter", class: "btn btn-info w-100 text-white" %>
+                <%= form.submit "Filter", class: "btn btn-primary w-100 text-white" %>
               </div>
             </div>
           <% end %>
@@ -54,18 +54,18 @@
     </div>
   </div>
 
-  <!-- Employees + Tasks Section -->
+  <!-- Employees OnboardingTasks Section -->
   <div class="row g-4">
     <!-- Employees -->
     <div class="col-md-6">
-      <h4 class="text-info mb-3">Employees</h4>
+      <h4 class="text-primary mb-3">Employees</h4>
       <% if @employees.any? %>
         <% @employees.each do |emp| %>
-          <div class="card mb-3 shadow-sm border border-secondary bg-dark text-light">
+          <div class="card mb-3 shadow-sm border border-primary bg-white text-dark">
             <div class="card-body">
-              <h5 class="card-title mb-2 text-warning"><%= emp.name %></h5>
-              <p class="mb-1">📂 Department: <span class="text-info"><%= emp.department %></span></p>
-              <p>✉️ Email: <span class="text-light-emphasis"><%= emp.user.email_address %></span></p>
+              <h5 class="card-title mb-2 text-primary"><%= emp.name %></h5>
+              <p class="mb-1">📂 Department: <span class="text-secondary"><%= emp.department %></span></p>
+              <p>✉️ Email: <span class="text-secondary"><%= emp.user.email_address %></span></p>
             </div>
           </div>
         <% end %>
@@ -75,30 +75,29 @@
     </div>
 
     <!-- Tasks -->
-    <!-- Tasks -->
-<div class="col-md-6">
-  <h4 class="text-info mb-3">Onboarding Tasks</h4>
-  <% if @tasks.any? %>
-    <div class="row row-cols-1 row-cols-md-2 g-3">
-      <% @tasks.each do |task| %>
-        <div class="col">
-          <div class="card shadow-sm border border-secondary bg-dark text-light h-100">
-            <div class="card-body">
-              <h5 class="card-title mb-2 text-warning"><%= task.task_name %></h5>
-              <p class="mb-1">🧑 Assigned to: <span class="text-info"><%= task.employee.name %></span></p>
-              <p>Status:
-                <span class="badge <%= task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %>">
-                  <%= task.status.capitalize %>
-                </span>
-              </p>
+    <div class="col-md-6">
+      <h4 class="text-primary mb-3">Onboarding Tasks</h4>
+      <% if @tasks.any? %>
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+          <% @tasks.each do |task| %>
+            <div class="col">
+              <div class="card shadow-sm border border-primary bg-white text-dark h-100">
+                <div class="card-body">
+                  <h5 class="card-title mb-2 text-primary"><%= task.task_name %></h5>
+                  <p class="mb-1">🧑 Assigned to: <span class="text-secondary"><%= task.employee.name %></span></p>
+                  <p>Status:
+                    <span class="badge <%= task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %>">
+                      <%= task.status.capitalize %>
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
+      <% else %>
+        <p class="text-muted">No tasks found for the selected filters.</p>
       <% end %>
     </div>
-  <% else %>
-    <p class="text-muted">No tasks found for the selected filters.</p>
-  <% end %>
-</div>
   </div>
 </div>

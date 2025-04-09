@@ -1,13 +1,26 @@
 class Admin::DashboardController < ApplicationController
   include Authentication
   before_action :authenticate_admin!
+
   def index
     Rails.logger.debug "✅ Admin dashboard index reached!"
-    @employees = Employee.includes(:user).all
+
+
+    @employees = Employee.includes(:user)
     @tasks = OnboardingTask.all
-    @departments = Department.all 
-  end
+    @departments = Department.all
+
   
+    if params[:status].present?
+      @tasks = @tasks.where(status: params[:status])
+      @employees = @employees.joins(:onboarding_tasks).where(onboarding_tasks: { status: params[:status] })
+    end
+
+    if params[:department].present?
+      @employees = @employees.where(department: params[:department])
+      @tasks = @tasks.joins(:employee).where(employees: { department: params[:department] })
+    end
+  end
 
   def assign_task
     @employees = Employee.all
@@ -28,5 +41,5 @@ class Admin::DashboardController < ApplicationController
 
   def task_params
     params.require(:onboarding_task).permit(:task_name, :status, :employee_id)
-  end  
+  end
 end
