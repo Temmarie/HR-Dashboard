@@ -23,7 +23,7 @@ class OnboardingTasksController < ApplicationController
   end
 
 # def update
-#   puts "Params: #{params.inspect}"
+#   puts "Params: #{params.inspect}"  
 #   task = OnboardingTask.find(params[:id])
 #   if task.update(status: 'completed')
 #     redirect_to root_path, notice: 'Task marked as completed.'

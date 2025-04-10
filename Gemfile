@@ -24,6 +24,7 @@ gem "tailwindcss-ruby"
 gem "dotenv-rails"
 gem "faker"
 gem "kaminari", "~> 1.2"
+gem "pg"
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

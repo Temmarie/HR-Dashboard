@@ -12,62 +12,57 @@
     </div>
   </div>
 
-  <!-- Employees and Tasks Section -->
+  <!-- Tasks Section -->
   <div class="row">
-    <% @employees.each do |emp| %>
-      <div class="col-md-6 mb-4">
-        <div class="card shadow-sm border-0">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><%= emp.is_a?(Employee) ? "#{emp.name} - #{emp.department}" : emp.email_address %></h5>
-          </div>
-          <div class="card-body">
-            <% if emp.is_a?(Employee) && emp.onboarding_tasks.any? %>
-              <ul class="list-group">
-                <% emp.onboarding_tasks.each do |task| %>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>
-                      <%= task.task_name %> - 
-                      <span class="badge <%= task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %>">
-                        <%= task.status.capitalize %>
-                      </span>
-                    </span>
-                    <% if task.status == 'pending' %>
-                      <button class="btn btn-sm btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#completeModal" data-task-id="<%= task.id %>">
-                        Mark as Completed
-                      </button>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            <% else %>
-              <p class="text-muted">No tasks assigned.</p>
-            <% end %>
+    <% if Current.user.employee&.onboarding_tasks&.any? %>
+      <% Current.user.employee.onboarding_tasks.each do |task| %>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm border-1 h-100">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><%= task.task_name %></h5>
+            </div>
+            <div class="card-body">
+              <p>Status: 
+                <span class="badge <%= task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %>">
+                  <%= task.status.capitalize %>
+                </span>
+              </p>
+              <% if task.status == 'pending' %>
+                <button class="btn btn-sm btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#completeModal" data-task-id="<%= task.id %>">
+                  Mark as Completed
+                </button>
+              <% end %>
+            </div>
           </div>
         </div>
+      <% end %>
+    <% else %>
+      <div class="col-12">
+        <p class="text-muted text-center">No tasks assigned.</p>
       </div>
     <% end %>
   </div>
+</div>
 
-  <!-- Modal for Marking Task as Completed -->
-  <div class="modal fade" id="completeModal" tabindex="-1" aria-labelledby="completeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="completeModalLabel">Mark Task as Completed</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <%= form_with url: "", method: :patch, local: true do |form| %>
-          <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
-          <%= form.hidden_field :id, id: "task-id" %>
-          <div class="modal-body">
-            Are you sure you want to mark this task as completed?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <%= form.submit "Mark as Completed", class: "btn btn-success fw-bold" %>
-          </div>
-        <% end %>
+<!-- Modal for Marking Task as Completed -->
+<div class="modal fade" id="completeModal" tabindex="-1" aria-labelledby="completeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="completeModalLabel">Mark Task as Completed</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <%= form_with url: "", method: :patch, local: true do |form| %>
+        <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
+        <%= form.hidden_field :id, id: "task-id" %>
+        <div class="modal-body">
+          Are you sure you want to mark this task as completed?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <%= form.submit "Mark as Completed", class: "btn btn-success fw-bold" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
