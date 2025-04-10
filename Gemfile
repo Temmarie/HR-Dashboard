@@ -70,4 +70,4 @@ end
 
 gem "tailwindcss-rails", "~> 3.3"
 # Add this line to use mysql2 as the database adapter
-gem "mysql2", "~> 0.5.0"
+# gem "mysql2", "~> 0.5.0"
