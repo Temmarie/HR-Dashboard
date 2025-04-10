@@ -10,7 +10,7 @@ class Admin::DashboardController < ApplicationController
     @tasks = OnboardingTask.all
     @departments = Department.all
 
-  
+
     if params[:status].present?
       @tasks = @tasks.where(status: params[:status])
       @employees = @employees.joins(:onboarding_tasks).where(onboarding_tasks: { status: params[:status] })

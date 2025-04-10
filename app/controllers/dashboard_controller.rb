@@ -1,13 +1,13 @@
 class DashboardController < ApplicationController
-  allow_unauthenticated_access only: [:home]
-  before_action :require_authentication, except: [:home]
+  allow_unauthenticated_access only: [ :home ]
+  before_action :require_authentication, except: [ :home ]
 
   def index
     if Current.user.admin?
       # view all employees
       @employees = Employee.includes(:onboarding_tasks)
 
-      
+
       if params[:status].present?
         @employees = @employees.where(onboarding_tasks: { status: params[:status] })
       end

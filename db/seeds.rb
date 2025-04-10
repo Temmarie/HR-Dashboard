@@ -64,7 +64,3 @@ Employee.all.each do |employee|
     )
   end
 end
-
-
-
-
