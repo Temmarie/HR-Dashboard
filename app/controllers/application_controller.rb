@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_user!
+    unless Current.user
+      redirect_to new_session_path, alert: "You must log in first"
+    end
+  end
+
   def admin?
     Current.user&.role == "admin"
   end

@@ -3,9 +3,6 @@ class Admin::DashboardController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    Rails.logger.debug "✅ Admin dashboard index reached!"
-
-
     @employees = Employee.includes(:user)
     @tasks = OnboardingTask.all
     @departments = Department.all

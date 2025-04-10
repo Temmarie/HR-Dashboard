@@ -63,6 +63,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <%= form_with url: onboarding_task_path(id: ''), method: :patch, local: true, id: "complete-task-form" do |form| %>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
         <div class="modal-body">
           Are you sure you want to mark this task as completed?
         </div>
@@ -77,16 +78,15 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    var completeModal = document.getElementById('completeModal')
+    var completeModal = document.getElementById("completeModal");
+    var completeTaskForm = document.getElementById("complete-task-form");
+
     if (completeModal) {
-      completeModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget
-        var taskId = button.getAttribute('data-task-id')
-        var modalForm = completeModal.querySelector('form')
-        modalForm.action = '/onboarding_tasks/' + taskId
-        var taskIdInput = modalForm.querySelector('#task-id')
-        taskIdInput.value = taskId
-      })
+      completeModal.addEventListener("show.bs.modal", function (event) {
+        var button = event.relatedTarget; // Button that triggered the modal
+        var taskId = button.getAttribute("data-task-id"); // Extract task ID from data attribute
+        completeTaskForm.action = `/onboarding_tasks/${taskId}`; // Set the form action dynamically
+      });
     }
-  })
+  });
 </script>
