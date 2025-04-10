@@ -1,4 +1,3 @@
-
 departments = [
   "Engineering",
   "Human Resources",
@@ -8,11 +7,12 @@ departments = [
   "Customer Success"
 ]
 
+# Seed Departments
 departments.each do |dept|
   Department.find_or_create_by!(name: dept)
 end
 
-# Create Admin
+# Create Admin User
 admin = User.create!(
   email_address: "admin@example.com",
   password: "password123",
@@ -20,18 +20,51 @@ admin = User.create!(
   role: "admin"
 )
 
-# Create Employees
-5.times do |i|
+
+employee_names = [
+  "Alice Johnson",
+  "Michael Lee",
+  "Sophia Ramirez",
+  "David Kim",
+  "Emily Chen"
+]
+
+
+employee_names.each_with_index do |full_name, i|
   user = User.create!(
-    email_address: "employee#{i + 1}@example.com",
+    email_address: full_name.parameterize(separator: ".") + "@example.com",
     password: "password123",
     password_confirmation: "password123",
     role: "employee"
   )
 
   Employee.create!(
-    name: "Employee #{i + 1}",
+    name: full_name,
     department: Department.all.sample.name,
     user: user
   )
 end
+
+task_names = [
+  "Submit ID Documents",
+  "Complete Payroll Setup",
+  "Attend Orientation",
+  "Meet Your Team Lead",
+  "Setup Company Email",
+  "Read Company Handbook"
+]
+
+# Assign 3 random onboarding tasks to each employee
+Employee.all.each do |employee|
+  task_names.sample(3).each do |task|
+    OnboardingTask.create!(
+      employee: employee,
+      task_name: task,
+      status: "pending"
+    )
+  end
+end
+
+
+
+

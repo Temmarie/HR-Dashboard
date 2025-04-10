@@ -1,0 +1,17 @@
+app = "your-app-name"
+
+[build]
+  image = "flyio/rails"
+
+[env]
+  RAILS_ENV = "production"
+
+[mounts]
+  "/app/public" = "public"
+
+[[services]]
+  internal_port = 3000
+  protocol = "tcp"
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]

@@ -4,15 +4,15 @@ class DashboardController < ApplicationController
 
   def index
     if Current.user.admin?
-      # Admins can view all employees and their tasks
+      # view all employees
       @employees = Employee.includes(:onboarding_tasks)
 
-      # Filter by task status if provided
+      
       if params[:status].present?
         @employees = @employees.where(onboarding_tasks: { status: params[:status] })
       end
 
-      # Filter by department if provided
+      # Filter by department
       if params[:department].present?
         @employees = @employees.where(department: params[:department])
       end
@@ -20,7 +20,7 @@ class DashboardController < ApplicationController
       # Fetch all tasks for admins
       @tasks = OnboardingTask.all
     else
-      # Employees can only view their own tasks through the associated employee record
+      # Employees task view
       @tasks = Current.user.employee.onboarding_tasks
     end
 
