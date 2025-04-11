@@ -54,23 +54,26 @@
   </div>
 </div>
 
-<!-- Modal for Marking Task as Completed -->
-<div class="modal fade" id="completeModal" tabindex="-1" aria-labelledby="completeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="completeModalLabel">Mark Task as Completed</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ <!-- Modal for Marking Task as Completed -->
+  <div class="modal fade" id="completeModal" tabindex="-1" aria-labelledby="completeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="completeModalLabel">Mark Task as Completed</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <%= form_with url: "", method: :patch, local: true do |form| %>
+          <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
+          <%= form.hidden_field :id, id: "task-id" %>
+          <div class="modal-body">
+            Are you sure you want to mark this task as completed?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit "Mark as Completed", class: "btn btn-success fw-bold" %>
+          </div>
+        <% end %>
       </div>
-      <%= form_with url: onboarding_task_path(id: ''), method: :patch, local: true, id: "complete-task-form" do |form| %>
-        <div class="modal-body">
-          Are you sure you want to mark this task as completed?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <%= form.submit "Mark as Completed", class: "btn btn-success fw-bold" %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

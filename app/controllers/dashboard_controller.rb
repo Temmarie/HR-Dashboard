@@ -26,8 +26,14 @@ class DashboardController < ApplicationController
 
     @onboarding_task = OnboardingTask.new
   end
-
   def home
-    redirect_to dashboard_path if authenticated?
+    if authenticated?
+      if admin?
+        redirect_to admin_dashboard_path
+      else
+        redirect_to dashboard_path
+      end
+    end
   end
+
 end
