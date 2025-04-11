@@ -19,11 +19,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: <%= ENV["DB_NAME"] %>
-    username: <%= ENV["DB_USERNAME"] %>
-    password: <%= ENV["DB_PASSWORD"] %>
-    host: <%= ENV["DB_HOST"] %>
-    port: 5432
+    url: <%= ENV["DATABASE_URL"] %>
+
   cache:
     <<: *primary_production
     database: hr_dashboard_production_cache
