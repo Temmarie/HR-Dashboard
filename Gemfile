@@ -68,6 +68,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "tailwindcss-rails", "~> 3.3"
+gem "tailwindcss-rails", "~> 4.2"
 # Add this line to use mysql2 as the database adapter
 # gem "mysql2", "~> 0.5.0"
